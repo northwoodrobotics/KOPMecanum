@@ -1,4 +1,4 @@
-package org.usfirst.frc.team6300.robot.commands.autonomous;
+package org.usfirst.frc.team6300.robot.commands;
 
 import org.usfirst.frc.team6300.robot.subsystems.Drivetrain;
 
