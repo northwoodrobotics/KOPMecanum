@@ -71,6 +71,15 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		
+		
+		// schedule the autonomous command
+		if (autonomousCommand == null) {
+			System.out.println("autonomousCommand is null! Running auto line code.");
+			drivetrain.setCentricMode(CentricMode.FIELD);
+			autonomousCommand = new AutoDrive(drivetrain, 0.5, 0.0, 0.0, 2.0);
+		}
+		autonomousCommand.start();
 	}
 
 	/**
