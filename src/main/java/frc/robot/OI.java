@@ -9,6 +9,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.AutoDrive;
+import frc.robot.subsystems.Drivetrain;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -36,10 +38,10 @@ public class OI {
 	}
 
 	public OI() {
-
+		
 		// Add stuff in here to make the JoystickButtons trigger commands:
-
-		// driveA.whenPressed(new ExampleCommand());
+		
+	
 		// driveA.whenReleased(new ExampleCommand());
 		// driveA.whileHeld(new ExampleCommand());
 

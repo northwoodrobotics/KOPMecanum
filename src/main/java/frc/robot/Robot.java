@@ -7,11 +7,19 @@
 
 package frc.robot;
 
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.command.Command;
+
+
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.commands.AutoDrive;
+import frc.robot.commands.autonomous.autonomousMvmt;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,6 +31,8 @@ import frc.robot.subsystems.Drivetrain;
 public class Robot extends TimedRobot {
 	public Drivetrain drivetrain;
 	public OI oi;
+	public Command autonomousCommand;
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -33,6 +43,7 @@ public class Robot extends TimedRobot {
 		drivetrain = new Drivetrain();
 		drivetrain.init();
 		oi = new OI();
+	
 	}
 
 	/**
@@ -72,12 +83,10 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		
-		
 		// schedule the autonomous command
 		if (autonomousCommand == null) {
 			System.out.println("autonomousCommand is null! Running auto line code.");
-			drivetrain.setCentricMode(CentricMode.FIELD);
-			autonomousCommand = new AutoDrive(drivetrain, 0.5, 0.0, 0.0, 2.0);
+			autonomousCommand = new autonomousMvmt(this);
 		}
 		autonomousCommand.start();
 	}
