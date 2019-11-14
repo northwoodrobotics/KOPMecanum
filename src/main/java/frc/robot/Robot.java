@@ -11,6 +11,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -31,8 +32,10 @@ import frc.robot.commands.autonomous.autonomousMvmt;
 public class Robot extends TimedRobot {
 	public Drivetrain drivetrain;
 	public OI oi;
-	public Command autonomousCommand;
-	
+	public autonomousMvmt autonomousCommand;
+	private enum Direction {FORWARD, BACKWARD}
+	SendableChooser<Direction> sideChooser= new SendableChooser<>();
+
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -43,6 +46,10 @@ public class Robot extends TimedRobot {
 		drivetrain = new Drivetrain();
 		drivetrain.init();
 		oi = new OI();
+		sideChooser.addDefault("Move Forward", Direction.FORWARD);
+		sideChooser.addObject("Move Backward", Direction.BACKWARD);
+		SmartDashboard.putData("Move", sideChooser);
+	;
 	
 	}
 
@@ -82,13 +89,18 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		
 		// schedule the autonomous command
-		if (autonomousCommand == null) {
-			System.out.println("autonomousCommand is null! Running auto line code.");
-			autonomousCommand = new autonomousMvmt(this);
-		}
+		autonomousCommand = new autonomousMvmt(this);
+		Direction direction = sideChooser.getSelected();
+			
+			if(direction == Direction.FORWARD) {
+				autonomousCommand.goForward(this);
+			} else if (direction == Direction.BACKWARD){
+				autonomousCommand.goBackward(this);
+			}
+		
 		autonomousCommand.start();
+		
 	}
 
 	/**
